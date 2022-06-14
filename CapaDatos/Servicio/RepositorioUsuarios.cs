@@ -21,7 +21,7 @@ namespace CapaDatos.Servicio
             using var connetion = new SqlConnection(connectionString);
            
             return await connetion.QueryAsync<Usuario>(
-                @"select Nombre, Apellido, 
+                @"select IdUsuario, Nombre, Apellido, 
                 Correo, Clave, Activo from Usuario");
 
         }
