@@ -1,3 +1,4 @@
+using CapaDatos.Interfaces;
 using CapaDatos.Servicio;
 
 var builder = WebApplication.CreateBuilder(args);

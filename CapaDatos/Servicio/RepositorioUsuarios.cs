@@ -1,4 +1,5 @@
-﻿using CapaEntidad;
+﻿using CapaDatos.Interfaces;
+using CapaEntidad;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -6,10 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace CapaDatos.Servicio
 {
-    public interface IRepositorioUsuarios
-    {
-        Task<IEnumerable<Usuario>> Obtener();
-    }
+
     public class RepositorioUsuarios : IRepositorioUsuarios
     {
         private readonly string connectionString;
@@ -21,12 +19,14 @@ namespace CapaDatos.Servicio
         public async Task<IEnumerable<Usuario>> Obtener()
         {
             using var connetion = new SqlConnection(connectionString);
+           
             return await connetion.QueryAsync<Usuario>(
-                @"select Nombre, Apellido, Correo, 
-                 Clave, Activo from Usuario");
+                @"select Nombre, Apellido, 
+                Correo, Clave, Activo from Usuario");
+
         }
 
     }
 
-       
+
 }

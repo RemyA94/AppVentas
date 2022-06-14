@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CapaEntidad;
 using CapaDatos.Servicio;
+using CapaDatos.Interfaces;
+using Newtonsoft.Json;
 
 namespace CapaPresentacionAdmin.Controllers
 {
@@ -16,10 +18,10 @@ namespace CapaPresentacionAdmin.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> ListarUsuarios2()
+        public async Task<IActionResult> ObteniendoUsuarios()
         {
-            var usurios = await repositorioUsuarios.Obtener();
-            return Json(usurios);
+            var data = await repositorioUsuarios.Obtener();
+            return Json(data);
         }
     }
 }
