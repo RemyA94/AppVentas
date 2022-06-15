@@ -46,7 +46,7 @@
             </div>
             <div class="modal-body">
 
-                <input id="txtid" type="hidden" value="0"/>
+                <input id="txtid" type="text" value="0"/>
 
                 <div class="row g-2">
 
@@ -89,7 +89,10 @@
 @section scripts
     {
 <script>
+
     let tablaData;
+    let filaSeleccionanda;
+
       tablaData = $("#tablaUsuarios").DataTable({
         responsive: true,
         ordering: false,
@@ -153,13 +156,33 @@
     //se muestra el modal al dar clic al icono de editar
     $("#tablaUsuarios tbody").on("click",'.btn-editar', function(){ 
         
-        let filaSeleccionanda = $(this).closest("tr"); //obtenemos la fila en donde ha sido presionado el boton
+        filaSeleccionanda = $(this).closest("tr"); //obtenemos la fila en donde ha sido presionado el boton
         let dataFilaSeleccionada = tablaData.row(filaSeleccionanda).data()//optenemos la informacion que trae la fila que ha sido seleccionada
         
         AbrirModal(dataFilaSeleccionada) // pasamos la informacion a abrirModal
 
         console.log(dataFilaSeleccionada)
     })
+    
+    function Guardar(){
+        let usuario = {
+
+            idUsuario: $("#txtid").val(),
+            nombre: $("#txtnombre").val(),
+            apellido: $("#txtapellido").val(),
+            correo: $("#txtemail").val(),
+            activo: $("#cboactivo").val() == 1 ? true : false,
+        }
+        if(usuario.idUsuario == 0){ //guardamos en la tabla una nueva fila 
+
+            tablaData.row.add(usuario).draw(false);
+
+        }else{ //editamos una fila ya existente
+
+            tablaData.row(filaSeleccionanda).data(usuario).draw(false);
+        }
+        $("#FormModal").modal("hide");
+    }
 
 </script>
     }
