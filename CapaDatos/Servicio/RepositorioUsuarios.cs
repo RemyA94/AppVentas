@@ -57,10 +57,10 @@ namespace CapaDatos.Servicio
             return Convert.ToInt32(resultado); 
         }
 
-         public async Task<bool> Editar(Usuario usuario)
+         public async Task<bool> Editar(Usuario usuario, string mensaje)
         {
             bool resultado = false;
-
+            mensaje = string.Empty;
             var parametros = new DynamicParameters();
             parametros.Add("IdUsuario",usuario.IdUsuario);
             parametros.Add("Nombre",usuario.Nombre);
@@ -76,7 +76,7 @@ namespace CapaDatos.Servicio
             await connection.ExecuteAsync(@"sp_EditarUsuarios", parametros,
                                           commandType: System.Data.CommandType.StoredProcedure);
 
-            var mensaje = parametros.Get<string>("Mensaje");
+            mensaje = parametros.Get<string>("Mensaje");
             resultado = parametros.Get<bool>("Resultado");
             return resultado;
 

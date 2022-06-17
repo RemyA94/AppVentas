@@ -1,11 +1,13 @@
 using CapaDatos.Interfaces;
 using CapaDatos.Servicio;
+using CapaPresentacionAdmin.Recursos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
+builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
 
 var app = builder.Build();
 

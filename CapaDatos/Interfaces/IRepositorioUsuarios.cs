@@ -9,7 +9,7 @@ namespace CapaDatos.Interfaces
 {
     public interface IRepositorioUsuarios
     {
-        Task<bool> Editar(Usuario usuario);
+        Task<bool> Editar(Usuario usuario, string mensaje);
         Task<int> Guardar(Usuario usuario, string mensaje);
         Task<IEnumerable<Usuario>> Obtener();
     }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CapaDatos.Interfaces
 {
-    internal interface IClaveEncriptacion
+    public interface IClaveEncriptacion
     {
+        string ConvertirSha256(string texto);
     }
 }
