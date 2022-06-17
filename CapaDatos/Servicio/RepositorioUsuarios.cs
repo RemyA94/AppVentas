@@ -79,8 +79,16 @@ namespace CapaDatos.Servicio
             mensaje = parametros.Get<string>("Mensaje");
             resultado = parametros.Get<bool>("Resultado");
             return resultado;
+        }
 
-
+        public async Task<bool> Eliminar(int id) 
+        {
+            bool resultado = false;
+        
+            using var connection = new SqlConnection(connectionString);
+            resultado = await connection.ExecuteAsync(@"Delete top (1) from Usuario where id = @id"
+            , new { id }) > 0 ? true : false;
+            return resultado;
         }
     }
 

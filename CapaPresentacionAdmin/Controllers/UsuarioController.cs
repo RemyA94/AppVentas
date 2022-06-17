@@ -32,12 +32,25 @@ namespace CapaPresentacionAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearUsuarios(Usuario usuario,  string mensaje)
+        public JsonResult GuardarUsuario(Usuario usuario)
         {
+            object resultado;
+            string mensaje = string.Empty;
+
+            if(usuario.IdUsuario == 0) 
+            {
+                resultado = repositorioUsuarios.Guardar(usuario, mensaje);
+            }
+            else
+            {
+                resultado = repositorioUsuarios.Editar(usuario, mensaje);
+            }
+            return Json(resultado, mensaje);
 
         }
 
-        public async Task<int> registrar(Usuario usuario, string mensaje)
+        [HttpGet]
+        public async Task<int> Guardar(Usuario usuario, string mensaje)
         {
             mensaje = string.Empty;
 
@@ -69,6 +82,7 @@ namespace CapaPresentacionAdmin.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<bool> Editar(Usuario usuario, string mensaje) 
         {
             mensaje = string.Empty;
@@ -97,6 +111,12 @@ namespace CapaPresentacionAdmin.Controllers
                 return false;
             }
 
+        }
+
+        [HttpGet]
+        public async Task<bool> Eliminar(int id) 
+        {
+            return await repositorioUsuarios.Eliminar(id);
         }
 
 
