@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Usuarios";
 }
+
+
 <ol class="breadcrumb mb-4 mt-4">
     <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
     <li class="breadcrumb-item active">Usuarios</li>
@@ -37,47 +39,52 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"> 
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#F5F5F5">
-                <h5 class="modal-title" id="exampleModalLabel">Crear usuario</h5>
-                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
-            </div>
-            <div class="modal-body">
-
-                <input id="txtid" type="text" value="0"/>
-
-                <div class="row g-2">
-
-                    <div class="col-sm-6">
-                        <label for="txtnombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="txtnombre">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="txtapellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="txtapellido">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="txtemail" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="txtemail">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="cboactivo" class="form-label">Activo</label>
-                        <select id="cboactivo" class="form-select form-select mb-3">
-                            <option value="1">Si</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-
+<div asp-validation-summary="All" class="text-danger">
+    <div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#F5F5F5">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear usuario</h5>
+                    @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-outline-primary" onclick="Guardar()">Guardar</button>
+                <div class="modal-body">
+
+                    <input id="txtid" type="text" value="0" />
+
+                    <div class="row g-2">
+
+                        <div class="col-sm-6">
+                            <label for="txtnombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="txtnombre">
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="txtapellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="txtapellido">
+                            <span asp-validation-for="Apellido" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="txtemail" class="form-label">Correo</label>
+                            <input type="text" class="form-control" id="txtemail">
+                            <span asp-validation-for="Correo" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="cboactivo" class="form-label">Activo</label>
+                            <select id="cboactivo" class="form-select form-select mb-3">
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="Guardar()">Guardar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -89,6 +96,8 @@
 @section scripts
     {
 <script>
+
+    <partial name="_ValidationScriptsPartial"/>
 
     let tablaData;
     let filaSeleccionanda;
@@ -131,11 +140,11 @@
 
     //se muestra el modal al dar clic en crear usuario
     function AbrirModal(json){
-        
+
         //ya con la informacion obtenida, procedemos concatenarla con cada uno de los campos del modal
         //con este if le decimos que si no es para crear un nuevo usuario, entonces que mapee los datos del json con los campos correspondientes en el modal
         if(json != null){
-            
+
             $("#txtid").val(json.idUsuario),
             $("#txtnombre").val(json.nombre),
             $("#txtapellido").val(json.apellido),
@@ -154,16 +163,16 @@
         $("#FormModal").modal("show");
     }
     //se muestra el modal al dar clic al icono de editar
-    $("#tablaUsuarios tbody").on("click",'.btn-editar', function(){ 
-        
+    $("#tablaUsuarios tbody").on("click",'.btn-editar', function(){
+
         filaSeleccionanda = $(this).closest("tr"); //obtenemos la fila en donde ha sido presionado el boton
         let dataFilaSeleccionada = tablaData.row(filaSeleccionanda).data()//optenemos la informacion que trae la fila que ha sido seleccionada
-        
+
         AbrirModal(dataFilaSeleccionada) // pasamos la informacion a abrirModal
 
         console.log(dataFilaSeleccionada)
     })
-    
+
     function Guardar(){
         let usuario = {
 
@@ -173,7 +182,7 @@
             correo: $("#txtemail").val(),
             activo: $("#cboactivo").val() == 1 ? true : false,
         }
-        if(usuario.idUsuario == 0){ //guardamos en la tabla una nueva fila 
+        if(usuario.idUsuario == 0){ //guardamos en la tabla una nueva fila
 
             tablaData.row.add(usuario).draw(false);
 
@@ -185,4 +194,5 @@
     }
 
 </script>
+<partial name="_ValidationScriptsPartial" />
     }

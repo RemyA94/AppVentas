@@ -23,5 +23,19 @@ namespace CapaPresentacionAdmin.Controllers
             var data = await repositorioUsuarios.Obtener();
             return Json(data);
         }
+
+        public IRepositorioUsuarios GetRepositorioUsuarios()
+        {
+            return repositorioUsuarios;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearUsuarios()
+        {
+            
+        } 
+
+
+        
     }
 }
