@@ -1,5 +1,7 @@
 using CapaDatos.Interfaces;
 using CapaDatos.Servicio;
+using CapaDatos.Servicio;
+using CapaNegocio;
 using CapaPresentacionAdmin.Recursos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
 builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
+builder.Services.AddTransient<ICapaNegocioUsuarios, CapaNegocioUsuarios>();
+
 
 var app = builder.Build();
 

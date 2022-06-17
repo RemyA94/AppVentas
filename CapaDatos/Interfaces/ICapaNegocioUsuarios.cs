@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace CapaDatos.Interfaces
 {
-    public interface IRepositorioUsuarios
+    public interface ICapaNegocioUsuarios
     {
         bool Editar(Usuario usuario, out string Mensaje);
         bool Eliminar(int id, out string Mensaje);
         int Guardar(Usuario usuario, out string Mensaje);
-        Task<IEnumerable<Usuario>> Obtener();
     }
 }

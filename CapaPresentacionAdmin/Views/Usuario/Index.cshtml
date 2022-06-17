@@ -39,52 +39,51 @@
 </div>
 
 <!-- Modal -->
-<div asp-validation-summary="All" class="text-danger">
-    <div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#F5F5F5">
-                    <h5 class="modal-title" id="exampleModalLabel">Crear usuario</h5>
-                    @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
-                </div>
-                <div class="modal-body">
 
-                    <input id="txtid" type="text" value="0" />
+<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#F5F5F5">
+                <h5 class="modal-title" id="exampleModalLabel">Crear usuario</h5>
+                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+            </div>
+            <div class="modal-body">
 
-                    <div class="row g-2">
+                <input id="txtid" type="text" value="0" />
 
-                        <div class="col-sm-6">
-                            <label for="txtnombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="txtnombre">
-                            <span asp-validation-for="Nombre" class="text-danger"></span>
-                        </div>
+                <div class="row g-2">
 
-                        <div class="col-sm-6">
-                            <label for="txtapellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="txtapellido">
-                            <span asp-validation-for="Apellido" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="txtemail" class="form-label">Correo</label>
-                            <input type="text" class="form-control" id="txtemail">
-                            <span asp-validation-for="Correo" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="cboactivo" class="form-label">Activo</label>
-                            <select id="cboactivo" class="form-select form-select mb-3">
-                                <option value="1">Si</option>
-                                <option value="0">No</option>
-                            </select>
-                        </div>
-
+                    <div class="col-sm-6">
+                        <label for="txtnombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="txtnombre">
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
                     </div>
+
+                    <div class="col-sm-6">
+                        <label for="txtapellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="txtapellido">
+                        <span asp-validation-for="Apellido" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="txtemail" class="form-label">Correo</label>
+                        <input type="text" class="form-control" id="txtemail">
+                        <span asp-validation-for="Correo" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="cboactivo" class="form-label">Activo</label>
+                        <select id="cboactivo" class="form-select form-select mb-3">
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-outline-primary" onclick="Guardar()">Guardar</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-primary" onclick="Guardar()">Guardar</button>
             </div>
         </div>
     </div>
@@ -172,7 +171,7 @@
     })
 
     function Guardar(){
-        let usuario = {
+        let Usuario = {
 
             idUsuario: $("#txtid").val(),
             nombre: $("#txtnombre").val(),
@@ -180,17 +179,45 @@
             correo: $("#txtemail").val(),
             activo: $("#cboactivo").val() == 1 ? true : false,
         }
-        if(usuario.idUsuario == 0){ //guardamos en la tabla una nueva fila
 
-            tablaData.row.add(usuario).draw(false);
+        jQuery.ajax({
+            url: '@Url.Action("GuardarUsuario","Usuario")',
+            type: "POST",
+            data: JSON.stringify({usuario: Usuario}),
+            dataType: "json",
+            dataSrc: "",
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
 
-        }else{ //editamos una fila ya existente
+                    debugger;
 
-            tablaData.row(filaSeleccionanda).data(usuario).draw(false);
-        }
-        $("#FormModal").modal("hide");
+                    if(Usuario.idUsuario == 0)
+                    { //Creamos un nuevo usuario
+                        if(data.resultado != 0 )
+                        {
+                            Usuario.idUsuario = data.resultado;
+                            tablaData.row.add(Usuario).draw(false);
+                            ("#FormModal").modal("hide");
+                        }
+                        else
+                        {
+                            alert(data.mensaje)
+                        }
+                    }
+                    else
+                    { //editamos un usuario ya existente
+
+                        tablaData.row(filaSeleccionanda).data(Usuario).draw(false);
+                    }
+                        console.log(data)
+            },
+            error: function(error){
+                console.log(error)
+            },
+            beforeSend: function(){
+            }
+        })
     }
-
 </script>
-<partial name="_ValidationScriptsPartial" />
+@*<partial name="_ValidationScriptsPartial" />*@
     }
