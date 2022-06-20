@@ -1,19 +1,28 @@
 using CapaDatos.Interfaces;
 using CapaDatos.Servicio;
-using CapaDatos.Servicio;
 using CapaNegocio;
 using CapaPresentacionAdmin.Recursos;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddRazorPages().AddNewtonsoftJson();
+
 builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
 builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
 builder.Services.AddTransient<ICapaNegocioUsuarios, CapaNegocioUsuarios>();
 
 
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,13 +1,7 @@
 ﻿using CapaDatos.Interfaces;
 using CapaDatos.Servicio;
 using CapaEntidad;
-using CapaPresentacionAdmin.Recursos;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CapaNegocio
 {
@@ -17,13 +11,13 @@ namespace CapaNegocio
         private readonly IClaveEncriptacion claveEncriptacion;
         private readonly IRepositorioUsuarios repositorioUsuarios;
 
-        public CapaNegocioUsuarios(IClaveEncriptacion claveEncriptacion, 
+        public CapaNegocioUsuarios(IClaveEncriptacion claveEncriptacion,
             IRepositorioUsuarios repositorioUsuarios)
         {
             this.claveEncriptacion = claveEncriptacion;
             this.repositorioUsuarios = repositorioUsuarios;
         }
-
+        
         public int Guardar(Usuario usuario, out string Mensaje)
         {
             Mensaje = string.Empty;
