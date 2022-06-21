@@ -29,7 +29,7 @@ namespace CapaNegocio
             }
             else if (string.IsNullOrEmpty(usuario.Apellido) || string.IsNullOrWhiteSpace(usuario.Apellido))
             {
-                Mensaje = "El apelledio del usuario no puede estar vacio";
+                Mensaje = "El apellido del usuario no puede estar vacio";
             }
             else if (string.IsNullOrEmpty(usuario.Correo) || string.IsNullOrWhiteSpace(usuario.Correo))
             {

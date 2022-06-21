@@ -77,6 +77,15 @@
                         </select>
                     </div>
 
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div id="mensajeError" class="alert alert-danger" role="alert">
+                                A simple danger alert—check it out!
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">
@@ -132,29 +141,32 @@
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json'
             }
-        })
+        });
 
         //se muestra el modal al dar clic en crear usuario
         function AbrirModal(json) {
+
+            $("#txtid").val(0);
+            $("#txtnombre").val("");
+            $("#txtapellido").val("");
+            $("#txtemail").val("");
+            $("#cboactivo").val(1);
+
+            $("#mensajeError").hide();
+
 
             //ya con la informacion obtenida, procedemos concatenarla con cada uno de los campos del modal
             //con este if le decimos que si no es para crear un nuevo usuario, entonces que mapee los datos del json con los campos correspondientes en el modal
             if (json != null) {
 
-                $("#txtid").val(json.idUsuario),
-                    $("#txtnombre").val(json.nombre),
-                    $("#txtapellido").val(json.apellido),
-                    $("#txtemail").val(json.correo),
-                    $("#cboactivo").val(json.activo == true ? 1 : 0)
-            } else {
-                //y que en caso de que sea para crear un nuevo usuario, pues que limpie los campos
-                $("#txtid").val(0),
-                    $("#txtnombre").val(""),
-                    $("#txtapellido").val(""),
-                    $("#txtemail").val(""),
-                    $("#cboactivo").val("")
-            }
+                $("#txtid").val(json.idUsuario);
+                $("#txtnombre").val(json.nombre);
+                $("#txtapellido").val(json.apellido);
+                $("#txtemail").val(json.correo);
+                $("#cboactivo").val(json.activo == true ? 1 : 0);
 
+
+            }
             $("#FormModal").modal("show");
         }
         //se muestra el modal al dar clic al icono de editar
@@ -173,41 +185,44 @@
 
             var Usuario = {
 
-                    IdUsuario: $("#txtid").val(),
-                    Activo: $("#cboactivo").val() == 1 ? true : false,
-                    Apellido: $("#txtapellido").val(),
-                    Correo: $("#txtemail").val(),
-                    Nombre: $("#txtnombre").val(),
+                idUsuario: $("#txtid").val(),
+                activo: $("#cboactivo").val() == 1 ? true : false,
+                apellido: $("#txtapellido").val(),
+                correo: $("#txtemail").val(),
+                nombre: $("#txtnombre").val(),
 
 
             }
-
             jQuery.ajax({
                 data: { objeto: Usuario },
                 url: '@Url.Action("GuardarUsuario","Usuario")',
                 type: "POST",
                 dataType: "json",
-                success: function (data1) {
-
+                success: function(data1) {
                     debugger;
 
-                    if (Usuario.IdUsuario == 0) {
-
+                    //Usuario Crear
+                    if (Usuario.idUsuario == 0) {
                         if (data1.resultado != 0) {
-
-                            Usuario.IdUsuario = data1.resultado;
+                            Usuario.idUsuario = data1.resultado;
                             tablaData.row.add(Usuario).draw(false);
-
-                            ("#FormModal").modal("hide");
+                            $("#FormModal").modal("hide");
                         }
                         else {
-
-                            alert(data1.mensaje)
+                            $("#mensajeError").text(data1.mensaje);
+                            $("#mensajeError").show();
                         }
                     }
+                    //Usuario Editar
                     else {
-
-                        tablaData.row(filaSeleccionanda).data(Usuario).draw(false);
+                        if (data1.resultado) {
+                            tablaData.row(filaSeleccionanda).data(Usuario).draw(false);
+                            filaSeleccionanda = null;
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data1.mensaje);
+                            $("#mensajeError").show();
+                        }
                     }
                 },
                 error: function(error) {
