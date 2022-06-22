@@ -108,7 +108,7 @@
 
         tablaData = $("#tablaUsuarios").DataTable({
             responsive: true,
-            ordering: false,
+            ordering: true,
             ajax: {
                 url: '@Url.Action("ObteniendoUsuarios","Usuario")',
                 type: "GET",
@@ -164,20 +164,42 @@
                 $("#txtapellido").val(json.apellido);
                 $("#txtemail").val(json.correo);
                 $("#cboactivo").val(json.activo == true ? 1 : 0);
-
-
             }
+
             $("#FormModal").modal("show");
         }
         //se muestra el modal al dar clic al icono de editar
         $("#tablaUsuarios tbody").on("click", '.btn-editar', function() {
 
             filaSeleccionanda = $(this).closest("tr"); //obtenemos la fila en donde ha sido presionado el boton
-            let dataFilaSeleccionada = tablaData.row(filaSeleccionanda).data()//optenemos la informacion que trae la fila que ha sido seleccionada
+            let dataFilaSeleccionada = tablaData.row(filaSeleccionanda).data();//optenemos la informacion que trae la fila que ha sido seleccionada
+            AbrirModal(dataFilaSeleccionada); // pasamos la informacion a abrirModal
 
-            AbrirModal(dataFilaSeleccionada) // pasamos la informacion a abrirModal
 
-            console.log(dataFilaSeleccionada)
+        })
+
+        //Borrar un registro
+        $("#tablaUsuarios tbody").on("click", '.btn-eliminar', function() {
+
+            let usuarioSeleccionado = $(this).closest("tr");
+            let dataFilaSeleccionada = tablaData.row(usuarioSeleccionado).data();
+            console.log(dataFilaSeleccionada);
+
+            swal({
+                title: "¿Estas Seguro?",
+                text: "¿Desea eliminar el usuario?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-outline-danger",
+                cancelButtonClass: "btn-outline-secondary",
+                confirmButtonText: "Sí, Eliminar!",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+                function() {
+                    swal("¡0880 Timon dañao!", "Individuo detonao' de la BBDD correctamente! La cabra, iluminati 🐐", "success");
+                });
+
         })
 
 
@@ -189,10 +211,9 @@
                 activo: $("#cboactivo").val() == 1 ? true : false,
                 apellido: $("#txtapellido").val(),
                 correo: $("#txtemail").val(),
-                nombre: $("#txtnombre").val(),
-
-
+                nombre: $("#txtnombre").val()
             }
+
             jQuery.ajax({
                 data: { objeto: Usuario },
                 url: '@Url.Action("GuardarUsuario","Usuario")',
@@ -200,6 +221,8 @@
                 dataType: "json",
                 success: function(data1) {
                     debugger;
+
+                    $(".modal-body").LoadingOverlay("hide");
 
                     //Usuario Crear
                     if (Usuario.idUsuario == 0) {
@@ -213,6 +236,7 @@
                             $("#mensajeError").show();
                         }
                     }
+
                     //Usuario Editar
                     else {
                         if (data1.resultado) {
@@ -220,18 +244,35 @@
                             filaSeleccionanda = null;
                             $("#FormModal").modal("hide");
                         } else {
+                            //utilizo bootstrap alert
                             $("#mensajeError").text(data1.mensaje);
                             $("#mensajeError").show();
                         }
                     }
                 },
                 error: function(error) {
-                    console.log(error)
+                    $(".modal-body").LoadingOverlay("hide");
+                    $("#mensajeError").text("Error Ajax");
+                    $("#mensajeError").show();
                 },
                 beforeSend: function() {
+                    //para mostrar el loading luego de agregar un registro
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size: 14,
+
+
+                    })
                 }
             })
         }
     </script>
     @*<partial name="_ValidationScriptsPartial" />*@
     }
+
+
+
+
+
+
