@@ -49,7 +49,8 @@ namespace CapaPresentacionAdmin.Controllers
             return Json(new { resultado = resultado, mensaje = mensaje });
 
         }
-
+        //[HttpPost]
+        //public 
 
        
 

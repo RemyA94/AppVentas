@@ -74,10 +74,10 @@ namespace CapaDatos.Servicio
                 using (var connection = new SqlConnection(connectionString))
                 {
                     SqlCommand cmd = new SqlCommand(@"sp_EditarUsuarios", connection);
+                    cmd.Parameters.AddWithValue("IdUsuario", usuario.IdUsuario);
                     cmd.Parameters.AddWithValue("Nombre", usuario.Nombre);
                     cmd.Parameters.AddWithValue("Apellido", usuario.Apellido);
                     cmd.Parameters.AddWithValue("Correo", usuario.Correo);
-                    cmd.Parameters.AddWithValue("Clave", usuario.Clave);
                     cmd.Parameters.AddWithValue("Activo", usuario.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;

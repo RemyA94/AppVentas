@@ -154,7 +154,6 @@
 
             $("#mensajeError").hide();
 
-
             //ya con la informacion obtenida, procedemos concatenarla con cada uno de los campos del modal
             //con este if le decimos que si no es para crear un nuevo usuario, entonces que mapee los datos del json con los campos correspondientes en el modal
             if (json != null) {
@@ -186,6 +185,7 @@
             console.log(dataFilaSeleccionada);
 
             swal({
+
                 title: "¿Estas Seguro?",
                 text: "¿Desea eliminar el usuario?",
                 type: "warning",
@@ -226,12 +226,15 @@
 
                     //Usuario Crear
                     if (Usuario.idUsuario == 0) {
+
                         if (data1.resultado != 0) {
+
                             Usuario.idUsuario = data1.resultado;
                             tablaData.row.add(Usuario).draw(false);
                             $("#FormModal").modal("hide");
                         }
                         else {
+
                             $("#mensajeError").text(data1.mensaje);
                             $("#mensajeError").show();
                         }
@@ -240,6 +243,7 @@
                     //Usuario Editar
                     else {
                         if (data1.resultado) {
+
                             tablaData.row(filaSeleccionanda).data(Usuario).draw(false);
                             filaSeleccionanda = null;
                             $("#FormModal").modal("hide");
@@ -251,12 +255,14 @@
                     }
                 },
                 error: function(error) {
+
                     $(".modal-body").LoadingOverlay("hide");
                     $("#mensajeError").text("Error Ajax");
                     $("#mensajeError").show();
                 },
                 beforeSend: function() {
                     //para mostrar el loading luego de agregar un registro
+
                     $(".modal-body").LoadingOverlay("show", {
                         imageResizeFactor: 2,
                         text: "Cargando...",
