@@ -112,7 +112,7 @@ namespace CapaDatos.Servicio
             {
                 using(var connection = new SqlConnection(connectionString))
                 {
-                    SqlCommand cmd = new SqlCommand(@"Delete top (1) from Usuario where id = @id", connection);
+                    SqlCommand cmd = new SqlCommand(@"Delete top (1) from Usuario where IdUsuario = @id", connection);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.CommandType = CommandType.Text;
                     connection.Open();

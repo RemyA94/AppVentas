@@ -182,9 +182,8 @@
 
             let usuarioSeleccionado = $(this).closest("tr");
             let dataFilaSeleccionada = tablaData.row(usuarioSeleccionado).data();
-            console.log(dataFilaSeleccionada);
 
-            swal({
+            swal({//sweet alert modal
 
                 title: "¿Estas Seguro?",
                 text: "¿Desea eliminar el usuario?",
@@ -196,13 +195,33 @@
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: false
             },
-                function() {
-                    swal("¡0880 Timon dañao!", "Individuo detonao' de la BBDD correctamente! La cabra, iluminati 🐐", "success");
+                function() {                    
+
+                    $.ajax({
+                        url: '@Url.Action("EliminarUsuario","Usuario")',
+                        type: "POST",
+                        data: { id: dataFilaSeleccionada.idUsuario },
+                        dataType: "json",
+                        success: function(data2) {
+                            debugger;
+                            if (data2.respuesta) {
+                                tablaData.row(usuarioSeleccionado).remove().draw();
+                                swal("¡0880 Timon dañao!", "Individuo detonao' de la BBDD correctamente! La cabra, iluminati 🐐", "success");
+
+                            } else {
+                                swal("No se pudo eliminar", data2.mensaje, "error")
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+
+
                 });
 
+
         })
-
-
         function Guardar() {
 
             var Usuario = {
@@ -274,7 +293,6 @@
             })
         }
     </script>
-    @*<partial name="_ValidationScriptsPartial" />*@
     }
 
 
