@@ -1,12 +1,13 @@
-﻿using System.Net;
+﻿using CapaDatos.Interfaces;
+using System.Net;
 using System.Net.Mail;
 
 namespace CapaPresentacionAdmin.Recursos
 {
-    public class EnviarCorreoUsuarios
+    public class EnviarCorreoUsuarios : IEnviarCorreoUsuarios
     {
 
-        public static bool EnviarCorreo(string correo, string asunto, string mensaje) 
+        public bool EnviarCorreo(string correo, string asunto, string mensaje) 
         {
             bool resultado = false;
             try 
@@ -20,7 +21,7 @@ namespace CapaPresentacionAdmin.Recursos
 
                 var smtp = new SmtpClient()
                 {
-                    Credentials = new NetworkCredential("igrismarshalshadow@gmail", "fdyykwfumlzgmjda"),
+                    Credentials = new NetworkCredential("igrismarshalshadow@gmail.com", "pbjcjsdnxyhceoma"),
                     Host = "smtp.gmail.com",
                     Port = 587,
                     EnableSsl = true

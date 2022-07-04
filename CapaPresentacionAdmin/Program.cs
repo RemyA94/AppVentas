@@ -17,6 +17,8 @@ builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
 builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
 builder.Services.AddTransient<ICapaNegocioUsuarios, CapaNegocioUsuarios>();
+builder.Services.AddTransient<IEnviarCorreoUsuarios, EnviarCorreoUsuarios>();
+builder.Services.AddTransient<IGenerarClaveUsuario, GenerarClaveUsuario>();
 
 
 var app = builder.Build();

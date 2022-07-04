@@ -10,12 +10,18 @@ namespace CapaNegocio
     {
         private readonly IClaveEncriptacion claveEncriptacion;
         private readonly IRepositorioUsuarios repositorioUsuarios;
+        private readonly IGenerarClaveUsuario generarClaveUsuario;
+        private readonly IEnviarCorreoUsuarios enviarCorreoUsuarios;
 
         public CapaNegocioUsuarios(IClaveEncriptacion claveEncriptacion,
-            IRepositorioUsuarios repositorioUsuarios)
+            IRepositorioUsuarios repositorioUsuarios, 
+            IGenerarClaveUsuario generarClaveUsuario, 
+            IEnviarCorreoUsuarios enviarCorreoUsuarios)
         {
             this.claveEncriptacion = claveEncriptacion;
             this.repositorioUsuarios = repositorioUsuarios;
+            this.generarClaveUsuario = generarClaveUsuario;
+            this.enviarCorreoUsuarios = enviarCorreoUsuarios;
         }
         
         public int Guardar(Usuario usuario, out string Mensaje)
@@ -39,17 +45,33 @@ namespace CapaNegocio
 
             if (string.IsNullOrEmpty(Mensaje))
             {
-                //aqui ira la logica para el correo
+                //Enviar un correo con la clave de acceso para los nuevos usuarios
+                string clave = generarClaveUsuario.GenerarClave();
 
-                string clave = "test123";
-                usuario.Clave = claveEncriptacion.ConvertirSha256(clave);
-                return repositorioUsuarios.Guardar(usuario, out Mensaje);
+                string asunto = "Creacion de cuenta";
+                string mensajeCorreo = "<h3>Su cuenta fué creada correctamente</h3></br><p>Su contraseña para acceder es: ¡clave!</p>";
+                mensajeCorreo = mensajeCorreo.Replace("¡clave!", clave);
+
+                bool respuesta = enviarCorreoUsuarios.EnviarCorreo(usuario.Correo, asunto, mensajeCorreo);
+
+                if (respuesta)
+                {
+                    usuario.Clave = claveEncriptacion.ConvertirSha256(clave);
+                    return repositorioUsuarios.Guardar(usuario, out Mensaje);
+                }
+                else
+                {
+                    Mensaje = "No se pudo enviar el correo";
+                    return 0;
+                }
+
             }
             else
             {
                 return 0;
             }
         }
+
 
         public bool Editar(Usuario usuario, out string Mensaje)
         {

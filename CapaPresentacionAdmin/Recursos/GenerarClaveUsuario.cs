@@ -1,8 +1,10 @@
-﻿namespace CapaPresentacionAdmin.Recursos
+﻿using CapaDatos.Interfaces;
+
+namespace CapaPresentacionAdmin.Recursos
 {
-    public class GenerarClaveUsuario
+    public class GenerarClaveUsuario: IGenerarClaveUsuario
     {
-        public static string GenerarClave()
+        public string GenerarClave()
         {
             string clave = Guid.NewGuid().ToString( "N").Substring(1,6);
             return clave;
