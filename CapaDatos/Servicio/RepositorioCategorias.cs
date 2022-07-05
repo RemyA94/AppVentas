@@ -67,10 +67,10 @@ namespace CapaDatos.Servicio
                 {
                     SqlCommand cmd = new SqlCommand(@"sp_EditarCategoria", connection);
                     cmd.Parameters.AddWithValue("IdCategoria", categoria.IdCategoria);
-                    cmd.Parameters.AddWithValue("Descipcion", categoria.Descripcion);
+                    cmd.Parameters.AddWithValue("Descripcion", categoria.Descripcion);
                     cmd.Parameters.AddWithValue("Activo", categoria.Activo);
-                    cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add("Mensaje", SqlDbType.Variant, 500).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     connection.Open();
@@ -99,8 +99,9 @@ namespace CapaDatos.Servicio
                 {
                     SqlCommand cmd = new SqlCommand(@"sp_EliminarCategoria", connection);
                     cmd.Parameters.AddWithValue("IdCategoria", id);
-                    cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add("Mensaje", SqlDbType.Variant, 500).Direction = ParameterDirection.Output; cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output; 
+                    cmd.CommandType = CommandType.Text;
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     connection.Open();

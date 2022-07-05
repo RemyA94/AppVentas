@@ -21,7 +21,7 @@ namespace CapaPresentacionAdmin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ObtenerCategoria()
+        public async Task<IActionResult> ObtenerCategorias()
         {
             var data = await repositorioCategorias.Obtener();
             return Json(data);
