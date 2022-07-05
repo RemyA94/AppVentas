@@ -57,13 +57,9 @@ namespace CapaPresentacionAdmin.Controllers
             string mensaje = String.Empty;
 
             respuesta = capaNegocioUsuarios.Eliminar(id, out mensaje);
-
             return Json(new { respuesta = respuesta, mensaje = mensaje });
 
         }
-
-
-
 
     }
 }
