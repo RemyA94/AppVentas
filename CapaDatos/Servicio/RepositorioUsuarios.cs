@@ -1,4 +1,4 @@
-﻿using CapaDatos.Interfaces;
+﻿ using CapaDatos.Interfaces;
 using CapaEntidad;
 using Dapper;
 using Microsoft.Data.SqlClient;

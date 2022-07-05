@@ -19,6 +19,7 @@ builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
 builder.Services.AddTransient<ICapaNegocioUsuarios, CapaNegocioUsuarios>();
 builder.Services.AddTransient<IEnviarCorreoUsuarios, EnviarCorreoUsuarios>();
 builder.Services.AddTransient<IGenerarClaveUsuario, GenerarClaveUsuario>();
+builder.Services.AddTransient<IRepositorioCategorias, RepositorioCategorias>();
 
 
 var app = builder.Build();
