@@ -13,7 +13,7 @@ namespace CapaDatos.Servicio
         private readonly string connectionString;
         public RepositorioUsuarios(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            connectionString = configuration["ConnectionString:DefaultConnection"];
 
         }
         public async Task<IEnumerable<Usuario>> Obtener()
