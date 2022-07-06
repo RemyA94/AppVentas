@@ -23,6 +23,7 @@ builder.Services.AddTransient<ICapaNegocioCategorias, CapaNegocioCategorias>();
 builder.Services.AddTransient<IEnviarCorreoUsuarios, EnviarCorreoUsuarios>();
 builder.Services.AddTransient<IGenerarClaveUsuario, GenerarClaveUsuario>();
 builder.Services.AddTransient<IRepositorioCategorias, RepositorioCategorias>();
+builder.Services.AddTransient<IRepositorioMarcas, RepositorioMarcas>();
 
 
 
