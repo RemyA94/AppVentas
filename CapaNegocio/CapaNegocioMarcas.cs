@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CapaNegocio
 {
-    public class CapaNegocioMarcas
+    public class CapaNegocioMarcas : ICapaNegocioMarcas
     {
         private readonly IRepositorioMarcas repositorioMarcas;
 

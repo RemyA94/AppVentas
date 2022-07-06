@@ -17,7 +17,7 @@ namespace CapaPresentacionAdmin.Controllers
         public UsuarioController(IRepositorioUsuarios repositorioUsuarios, 
             IClaveEncriptacion claveEncriptacion, ICapaNegocioUsuarios capaNegocioUsuarios)
         {
-            this.repositorioUsuarios = repositorioUsuarios;
+
             this.capaNegocioUsuarios = capaNegocioUsuarios;
         }
         public IActionResult Index()

@@ -2,10 +2,7 @@ using CapaDatos.Interfaces;
 using CapaDatos.Servicio;
 using CapaNegocio;
 using CapaPresentacionAdmin.Recursos;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Configuration;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,14 +13,20 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
 
+//Ropositorios
 builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
-builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
-builder.Services.AddTransient<ICapaNegocioUsuarios, CapaNegocioUsuarios>();
-builder.Services.AddTransient<ICapaNegocioCategorias, CapaNegocioCategorias>();
-builder.Services.AddTransient<IEnviarCorreoUsuarios, EnviarCorreoUsuarios>();
-builder.Services.AddTransient<IGenerarClaveUsuario, GenerarClaveUsuario>();
 builder.Services.AddTransient<IRepositorioCategorias, RepositorioCategorias>();
 builder.Services.AddTransient<IRepositorioMarcas, RepositorioMarcas>();
+
+//Capa Negocio
+builder.Services.AddTransient<ICapaNegocioUsuarios, CapaNegocioUsuarios>();
+builder.Services.AddTransient<ICapaNegocioMarcas, CapaNegocioMarcas>();
+builder.Services.AddTransient<ICapaNegocioCategorias, CapaNegocioCategorias>();
+
+//Recursos
+builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
+builder.Services.AddTransient<IEnviarCorreoUsuarios, EnviarCorreoUsuarios>();
+builder.Services.AddTransient<IGenerarClaveUsuario, GenerarClaveUsuario>();
 
 
 

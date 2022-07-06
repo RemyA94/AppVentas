@@ -1,4 +1,5 @@
 ﻿using CapaDatos.Interfaces;
+using CapaEntidad;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CapaPresentacionAdmin.Controllers
@@ -6,10 +7,13 @@ namespace CapaPresentacionAdmin.Controllers
     public class MarcaController : Controller
     {
         private readonly IRepositorioMarcas repositorioMarcas;
+        private readonly ICapaNegocioMarcas capaNegocioMarcas;
 
-        public MarcaController(IRepositorioMarcas repositorioMarcas)
+        public MarcaController(IRepositorioMarcas repositorioMarcas, 
+            ICapaNegocioMarcas capaNegocioMarcas)
         {
             this.repositorioMarcas = repositorioMarcas;
+            this.capaNegocioMarcas = capaNegocioMarcas;
         }
         public IActionResult Index()
         {
@@ -20,6 +24,33 @@ namespace CapaPresentacionAdmin.Controllers
         {
             var data = await repositorioMarcas.Obtener();
             return Json(data);
+        }
+
+        [HttpPost]
+        public JsonResult GuardarMarca(Marca objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+
+            if(objeto.IdMarca == 0)
+            {
+                resultado = capaNegocioMarcas.Guardar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = capaNegocioMarcas.Editar(objeto, out mensaje);
+            }
+            return Json(new { resultdo = resultado, mensaje = mensaje });
+        }
+
+        [HttpPost]
+        public JsonResult EliminarMarca(Marca objeto)
+        {
+            bool respuesta;
+            string mensaje = string.Empty;
+
+            respuesta = capaNegocioMarcas.Editar(objeto, out mensaje);
+            return Json(new { respuesta = respuesta, mensaje = mensaje });
         }
     }
 }
