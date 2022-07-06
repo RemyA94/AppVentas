@@ -88,7 +88,7 @@
     <script>
 
         let tablaData;
-        let filaSeleccionanda;
+        let filaSeleccionada;
 
         tablaData = $("#tablamarcas").DataTable({
             responsive: true,
@@ -149,8 +149,8 @@
         //se muestra el modal al dar clic al icono de editar
         $("#tablamarcas tbody").on("click", '.btn-editar', function() {
 
-            filaSeleccionanda = $(this).closest("tr"); //obtenemos la fila en donde ha sido presionado el boton
-            let dataFilaSeleccionada = tablaData.row(filaSeleccionanda).data();//optenemos la informacion que trae la fila que ha sido seleccionada
+            filaSeleccionada = $(this).closest("tr"); //obtenemos la fila en donde ha sido presionado el boton
+            let dataFilaSeleccionada = tablaData.row(filaSeleccionada).data();//optenemos la informacion que trae la fila que ha sido seleccionada
             AbrirModal(dataFilaSeleccionada); // pasamos la informacion a abrirModal
 
 
@@ -159,8 +159,8 @@
         //Borrar un registro
         $("#tablamarcas tbody").on("click", '.btn-eliminar', function() {
 
-            let categoriaSeleccionada = $(this).closest("tr");
-            let dataFilaSeleccionada = tablaData.row(categoriaSeleccionada).data();
+            let marcaSeleccionada = $(this).closest("tr");
+            let dataFilaSeleccionada = tablaData.row(marcaSeleccionada).data();
 
             swal({//sweet alert modal
 
@@ -184,7 +184,7 @@
                         success: function(data2) {
                             debugger;
                             if (data2.respuesta) {
-                                tablaData.row(categoriaSeleccionada).remove().draw();
+                                tablaData.row(marcaSeleccionada).remove().draw();
                                 swal("¡0880 Timon dañao!", "Individuo detonao' de la BBDD correctamente! La cabra, iluminati 🐐", "success");
 
                             } else {
@@ -235,13 +235,12 @@
                             $("#mensajeError").show();
                         }
                     }
-
                     //Usuario Editar
                     else {
                         if (data1.resultado) {
 
-                            tablaData.row(filaSeleccionanda).data(Marca).draw(false);
-                            filaSeleccionanda = null;
+                            tablaData.row(filaSeleccionada).data(Marca).draw(false);
+                            filaSeleccionada = null;
                             $("#FormModal").modal("hide");
                         } else {
                             //utilizo bootstrap alert

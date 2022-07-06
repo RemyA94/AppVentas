@@ -40,16 +40,16 @@ namespace CapaPresentacionAdmin.Controllers
             {
                 resultado = capaNegocioMarcas.Editar(objeto, out mensaje);
             }
-            return Json(new { resultdo = resultado, mensaje = mensaje });
+            return Json(new { resultado = resultado, mensaje = mensaje });
         }
 
         [HttpPost]
-        public JsonResult EliminarMarca(Marca objeto)
+        public JsonResult EliminarMarca(int id)
         {
             bool respuesta;
             string mensaje = string.Empty;
 
-            respuesta = capaNegocioMarcas.Editar(objeto, out mensaje);
+            respuesta = capaNegocioMarcas.Eliminar(id, out mensaje);
             return Json(new { respuesta = respuesta, mensaje = mensaje });
         }
     }

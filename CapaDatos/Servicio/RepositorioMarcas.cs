@@ -63,6 +63,7 @@ namespace CapaDatos.Servicio
                 using(var connection = new SqlConnection(_connectionString))
                 {
                     SqlCommand cmd = new SqlCommand(@"sp_EditarMarca", connection);
+                    cmd.Parameters.AddWithValue("IdMarca", marca.IdMarca);
                     cmd.Parameters.AddWithValue("Descripcion", marca.Descripcion);
                     cmd.Parameters.AddWithValue("Activo", marca.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
