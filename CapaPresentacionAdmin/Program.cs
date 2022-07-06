@@ -5,9 +5,11 @@ using CapaPresentacionAdmin.Recursos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();
@@ -21,6 +23,8 @@ builder.Services.AddTransient<ICapaNegocioCategorias, CapaNegocioCategorias>();
 builder.Services.AddTransient<IEnviarCorreoUsuarios, EnviarCorreoUsuarios>();
 builder.Services.AddTransient<IGenerarClaveUsuario, GenerarClaveUsuario>();
 builder.Services.AddTransient<IRepositorioCategorias, RepositorioCategorias>();
+
+
 
 
 var app = builder.Build();

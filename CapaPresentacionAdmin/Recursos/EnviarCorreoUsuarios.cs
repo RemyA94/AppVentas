@@ -6,7 +6,12 @@ namespace CapaPresentacionAdmin.Recursos
 {
     public class EnviarCorreoUsuarios : IEnviarCorreoUsuarios
     {
+        private readonly IConfiguration configuration;
 
+        public EnviarCorreoUsuarios(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         public bool EnviarCorreo(string correo, string asunto, string mensaje) 
         {
             bool resultado = false;
@@ -14,14 +19,14 @@ namespace CapaPresentacionAdmin.Recursos
             {
                 MailMessage mail = new MailMessage();
                 mail.To.Add(correo);
-                mail.From = new MailAddress("igrismarshalshadow@gmail");
+                mail.From = new MailAddress(configuration["mailDirection"]);
                 mail.Subject = asunto;
                 mail.Body = mensaje;
                 mail.IsBodyHtml = true;
 
                 var smtp = new SmtpClient()
                 {
-                    Credentials = new NetworkCredential("igrismarshalshadow@gmail.com", "pbjcjsdnxyhceoma"),
+                    Credentials = new NetworkCredential(configuration["mailDirection"], configuration["mailPassword"]),
                     Host = "smtp.gmail.com",
                     Port = 587,
                     EnableSsl = true
