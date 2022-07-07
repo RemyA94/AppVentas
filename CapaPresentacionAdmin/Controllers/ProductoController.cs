@@ -18,5 +18,11 @@ namespace CapaPresentacionAdmin.Controllers
         {
             return View();
         }
+
+        public JsonResult ObtenerProductos()
+        {
+            var data =  repositorioProductos.Obtener();
+            return Json(data);
+        }
     }
 }

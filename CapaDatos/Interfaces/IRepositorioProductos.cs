@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaEntidad;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace CapaDatos.Interfaces
 {
     public interface IRepositorioProductos
     {
+        List<Producto> Obtener();
     }
 }
