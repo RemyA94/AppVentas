@@ -126,7 +126,6 @@
             }
         });
 
-        //se muestra el modal al dar clic en crear usuario
         function AbrirModal(json) {
 
             $("#txtid").val(0);
@@ -135,8 +134,6 @@
 
             $("#mensajeError").hide();
 
-            //ya con la informacion obtenida, procedemos concatenarla con cada uno de los campos del modal
-            //con este if le decimos que si no es para crear un nuevo usuario, entonces que mapee los datos del json con los campos correspondientes en el modal
             if (json != null) {
 
                 $("#txtid").val(json.idMarca);
@@ -146,23 +143,22 @@
 
             $("#FormModal").modal("show");
         }
-        //se muestra el modal al dar clic al icono de editar
+        
         $("#tablamarcas tbody").on("click", '.btn-editar', function() {
 
-            filaSeleccionada = $(this).closest("tr"); //obtenemos la fila en donde ha sido presionado el boton
-            let dataFilaSeleccionada = tablaData.row(filaSeleccionada).data();//optenemos la informacion que trae la fila que ha sido seleccionada
-            AbrirModal(dataFilaSeleccionada); // pasamos la informacion a abrirModal
+            filaSeleccionada = $(this).closest("tr");
+            let dataFilaSeleccionada = tablaData.row(filaSeleccionada).data();
+            AbrirModal(dataFilaSeleccionada);
 
 
         })
 
-        //Borrar un registro
         $("#tablamarcas tbody").on("click", '.btn-eliminar', function() {
 
             let marcaSeleccionada = $(this).closest("tr");
             let dataFilaSeleccionada = tablaData.row(marcaSeleccionada).data();
 
-            swal({//sweet alert modal
+            swal({
 
                 title: "¿Estas Seguro?",
                 text: "¿Desea eliminar la marca?",
@@ -185,7 +181,7 @@
                             debugger;
                             if (data2.respuesta) {
                                 tablaData.row(marcaSeleccionada).remove().draw();
-                                swal("¡0880 Timon dañao!", "Individuo detonao' de la BBDD correctamente! La cabra, iluminati 🐐", "success");
+                                swal("¡Hecho!", "Marca eliminada correctamente", "success");
 
                             } else {
                                 swal("No se pudo eliminar", data2.mensaje, "error")
@@ -195,11 +191,7 @@
                             console.log(error);
                         }
                     });
-
-
                 });
-
-
         })
         function Guardar() {
 
@@ -220,7 +212,6 @@
 
                     $(".modal-body").LoadingOverlay("hide");
 
-                    //Usuario Crear
                     if (Marca.idMarca == 0) {
 
                         if (data1.resultado != 0) {
@@ -235,7 +226,6 @@
                             $("#mensajeError").show();
                         }
                     }
-                    //Usuario Editar
                     else {
                         if (data1.resultado) {
 
@@ -243,7 +233,7 @@
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
                         } else {
-                            //utilizo bootstrap alert
+   
                             $("#mensajeError").text(data1.mensaje);
                             $("#mensajeError").show();
                         }
@@ -256,7 +246,6 @@
                     $("#mensajeError").show();
                 },
                 beforeSend: function() {
-                    //para mostrar el loading luego de agregar un registro
 
                     $(".modal-body").LoadingOverlay("show", {
                         imageResizeFactor: 2,

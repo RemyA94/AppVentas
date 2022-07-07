@@ -19,6 +19,7 @@ namespace CapaPresentacionAdmin.Controllers
         {
 
             this.capaNegocioUsuarios = capaNegocioUsuarios;
+            this.repositorioUsuarios = repositorioUsuarios;
         }
         public IActionResult Index()
         {

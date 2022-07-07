@@ -17,11 +17,13 @@ builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
 builder.Services.AddTransient<IRepositorioCategorias, RepositorioCategorias>();
 builder.Services.AddTransient<IRepositorioMarcas, RepositorioMarcas>();
+builder.Services.AddTransient<IRepositorioProductos, RepositorioProductos>();
 
 //Capa Negocio
 builder.Services.AddTransient<ICapaNegocioUsuarios, CapaNegocioUsuarios>();
 builder.Services.AddTransient<ICapaNegocioMarcas, CapaNegocioMarcas>();
 builder.Services.AddTransient<ICapaNegocioCategorias, CapaNegocioCategorias>();
+builder.Services.AddTransient<ICapaNegocioProductos, CapaNegocioProductos>();
 
 //Recursos
 builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
