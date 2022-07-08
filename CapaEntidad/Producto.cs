@@ -18,5 +18,10 @@ namespace CapaEntidad
         public string RutaImagen { get; set; }
         public string NombreImagen { get; set; }
         public bool Activo { get; set; }
+
+
+        public  string PrecioTexto { get; set; } //para poder recibir el valor desde la web
+        public string Base64 { get; set; } //formato en cual vamos a mostrar las  imagenes
+        public string extension { get; set; } //Extension de la imgaen que vamos a subir
     }
 }

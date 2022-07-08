@@ -142,10 +142,6 @@ namespace CapaDatos.Servicio
             return resultado;
         }
 
-
-
-
-
         public bool Editar(Producto producto, out string Mensaje)
         {
             Mensaje = string.Empty;
@@ -183,7 +179,7 @@ namespace CapaDatos.Servicio
             return resultado;
         }
 
-        public bool Èliminar(Producto producto, out string Mensaje)
+        public bool Eliminar(int  id, out string Mensaje)
         {
             Mensaje = string.Empty;
             bool resultado = false;
@@ -193,7 +189,7 @@ namespace CapaDatos.Servicio
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     SqlCommand cmd = new SqlCommand(@"sp_EliminarProducto", connection);
-                    cmd.Parameters.AddWithValue("IdProducto", producto.IdProducto);
+                    cmd.Parameters.AddWithValue("IdProducto", id);
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
