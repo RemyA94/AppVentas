@@ -29,6 +29,7 @@ builder.Services.AddTransient<ICapaNegocioProductos, CapaNegocioProductos>();
 builder.Services.AddTransient<IClaveEncriptacion, ClaveEncriptacion>();
 builder.Services.AddTransient<IEnviarCorreoUsuarios, EnviarCorreoUsuarios>();
 builder.Services.AddTransient<IGenerarClaveUsuario, GenerarClaveUsuario>();
+builder.Services.AddTransient<IConvertirImagenBase64, ConvertirImagenBase64>();
 
 
 

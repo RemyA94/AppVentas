@@ -8,7 +8,7 @@
 
 <div class="card">
     <div class="card-header">
-        <i class="bi bi-people-fill fa-lg me-1"></i>Lista de productos
+        <i class="bi bi-boxes fa-lg me-1"></i>Lista de productos
     </div>
 
     <div class="card-body">
@@ -23,8 +23,8 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Descripción</th>
-                    <th>Desc. marca</th>
-                    <th>Desc. categoría</th>
+                    <th>marca</th>
+                    <th>categoría</th>
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Activo</th>
@@ -41,32 +41,73 @@
 <!-- Modal -->
 
 <div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#F5F5F5">
-                <h5 class="modal-title" id="exampleModalLabel">Crear categoría</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Crear producto</h5>
                 @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
             </div>
             <div class="modal-body">
 
                 <input id="txtid" type="number" value="0" />
 
+                <form id="contenedorProducto" class="row">
+
+                    <div class="col-sm-3">
+                        <div class="mb-2">
+                            <img id="imgProducto" height="197" width="200" class="border rounded mx-auto d-block img-fluid" />
+                        </div>
+                        <div class="mb-2">
+                            <input class="form-control" type="file" id="fileProducto" accept="image/png, image/jpg, image/jpeg" onchange="" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="txtNombre" name="Nombre" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea type="text" class="form-control" id="txtDescripcion" name="Descripcion" style="height:125px;resize:none"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Marca</label>
+                            <select id="cboMarca" class="form-select">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Categoría</label>
+                            <select id="cboCategoria" class="form-select">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Precio</label>
+                            <input type="text" class="form-control" id="txtPrecio" name="Precio" autocomplete="off" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="txtStock" name="Stock" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Activo</label>
+                            <select id="cboactivo" class="form-select form-select mb-3">
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+
+                <!--Mensaje de alerta-->
                 <div class="row g-1">
-
-                    <div class="col-sm-6">
-                        <label for="txtDecripcion" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="txtDecripcion">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="cboactivo" class="form-label">Activo</label>
-                        <select id="cboactivo" class="form-select form-select mb-3">
-                            <option value="1">Si</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-
-                    <!--Mensaje de alerta-->
                     <div class="row mt-2">
                         <div class="col-12">
                             <div id="mensajeError" class="alert alert-danger" role="alert">
@@ -94,8 +135,8 @@
         let tablaData;
         let filaSeleccionada;
 
-debugger;
-        
+        debugger;
+
         tablaData = $("#tablaproductos").DataTable({
             responsive: true,
             ordering: true,
